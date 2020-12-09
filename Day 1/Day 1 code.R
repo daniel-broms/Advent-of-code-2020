@@ -1,5 +1,4 @@
-# Day 1 : Find the pair of numbers whose total is 2000. Calculate the product of these two numbers.
-# Advent of code - proof of github account ownership : 1201504-20201206-5572bc01
+# Day 1 : Find the pair of numbers whose total is 2020. Calculate the product of these two numbers.
 #Import the input data to a vector.
 input <- scan(file="Day 1/input.txt")
 
@@ -28,7 +27,6 @@ FindTriplet <- function(input) {
     for (value2 in input) {
       for (value3 in input) {
         if (value1 + value2 + value3 == 2020) {
-          #print(c(value1, value2, value3))   #Show the triplet
           return( c(value1,  value2,  value3))
         }
       }
