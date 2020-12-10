@@ -69,5 +69,5 @@ combs <- function(l) {
   return(case_when(l ==1 ~ 2 , l == 2 ~ 4, l ==3 ~ 7, l == 4 ~ 12 ))
 }
 
-#list the product of allowed combinations : (1157018619904 WRONG ANSWER, lot the last group)   4628074479616
+#list the product of allowed combinations
 print(prod(combs(g)), digits = 16)
