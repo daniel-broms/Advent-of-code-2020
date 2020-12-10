@@ -52,9 +52,6 @@ for(i in 3:nrow(t)-1){
 }
 g <- c(g,acc)     #Add the last sequence 
 
-
-prod(combs(g))
-
 #define a function to map sequence length to nr of allowed combinations
 combs <- function(l) {
   return(case_when(l ==1 ~ 2 , l == 2 ~ 4, l ==3 ~ 7, l == 4 ~ 12 ))
