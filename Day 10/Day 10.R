@@ -30,7 +30,7 @@ t$diff <- t$jolt - lag(t$jolt, 1)                                 #Compute lagge
 # 1 adapter  : 2 combinations (2^1)
 # 2 adapters : 4 combinations (2^2)
 # 3 adapters : 7 combinations (2^3 - 1), where -1 represents all three adapters excluded which is not allowed.
-# 4 adapters : 12 combinations(2^4 - 4), where -4 represents the four combinations not allowed (3 * 3 in a row + 1 all four in a row)
+# 4 adapters : 13 combinations(2^4 - 3), where -3 represents the 3 combinations not allowed (2 * 3 in a row + 1 all four in a row)
 
 #Find sequences of excludable adapters.
 #Add column "excludeable" = if diff = 1 and next diff is not 3.
@@ -54,7 +54,7 @@ g <- c(g,acc)     #Add the last sequence
 
 #define a function to map sequence length to nr of allowed combinations
 combs <- function(l) {
-  return(case_when(l ==1 ~ 2 , l == 2 ~ 4, l ==3 ~ 7, l == 4 ~ 12 ))
+  return(case_when(l ==1 ~ 2 , l == 2 ~ 4, l ==3 ~ 7, l == 4 ~ 13 ))
 }
 
 #list the product of allowed combinations
