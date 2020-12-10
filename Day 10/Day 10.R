@@ -24,25 +24,16 @@ t$diff <- t$jolt - lag(t$jolt, 1)                                 #Compute lagge
 #All diff 1 adapters before a 3-adapter cannot be excluded (or else the jolt diff becomes 4).
 #Each 1-diff adapter that we can exclude doubles the number of combinations.
 #We can exclude any adapter which does not cause the difference in the adapter chain to be > 3.
-
-
-#Is the answer 2 ^ (nr of excludeable adapters) ?  In the short example the answer is 8 = 2 ^ 3. There are 3 excludeable adapters in the chain. 
-#However, in the longer example the answer is 19208 which is NOT an exponent of 2. In this case there are 15 excludeable adapters (2^15 = 32768)
 #it is not possible to remove more than 3 1-adapters in a row because then the jolt diff becomes 4 : we need to exclude these combinations!
-
-#3-diff adapters cannot be excluded.
-#1-diff adapters before a 3-diff adapter cannot be excluded.
-#All other adapters can be excluded (unless we exclude to many (3) in a row!)
 
 #Strategy : Find all individual sequences of excludeable adapters. In each sequence, find how many combinations there are:
 # 1 adapter  : 2 combinations (2^1)
 # 2 adapters : 4 combinations (2^2)
 # 3 adapters : 7 combinations (2^3 - 1), where -1 represents all three adapters excluded which is not allowed.
-# 4 adapters : 12 combinations(2^4 - 4), where -4 represents the four combinations not allowed (3 * 3 in a row + 1 all four in a row)
+# 4 adapters : 13 combinations(2^4 - 3), where -3 represents the 3 combinations not allowed (2 * 3 in a row + 1 all four in a row)
 
-#What is the longest sequence of excludeable adapters?
+#Find sequences of excludable adapters.
 #Add column "excludeable" = if diff = 1 and next diff is not 3.
-
 t$excludable <- (t$diff == 1 & !lead(t$diff,1) == 3)
 
 #list each "excludeable" sequence and how many in a row there are. Record each sequence length in "g".
@@ -55,19 +46,16 @@ for(i in 3:nrow(t)-1){
   } else {
     if(!acc == 0) {
       g <- c(g,acc)
-      }
+    }
     acc <- 0
   }
 }
 g <- c(g,acc)     #Add the last sequence 
 
-
-prod(combs(g))
-
 #define a function to map sequence length to nr of allowed combinations
 combs <- function(l) {
-  return(case_when(l ==1 ~ 2 , l == 2 ~ 4, l ==3 ~ 7, l == 4 ~ 12 ))
+  return(case_when(l ==1 ~ 2 , l == 2 ~ 4, l ==3 ~ 7, l == 4 ~ 13 ))
 }
 
-#list the product of allowed combinations : (1157018619904 WRONG ANSWER, lot the last group)   4628074479616
+#list the product of allowed combinations
 print(prod(combs(g)), digits = 16)
