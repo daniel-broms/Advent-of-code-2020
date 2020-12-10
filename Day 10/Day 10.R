@@ -59,3 +59,4 @@ combs <- function(l) {
 
 #list the product of allowed combinations
 print(prod(combs(g)), digits = 16)
+
