@@ -32,7 +32,7 @@ t$diff <- t$jolt - lag(t$jolt, 1)                                 #Compute lagge
 # 3 adapters : 7 combinations (2^3 - 1), where -1 represents all three adapters excluded which is not allowed.
 # 4 adapters : 13 combinations(2^4 - 3), where -3 represents the 3 combinations not allowed (2 * 3 in a row + 1 all four in a row)
 
-#Find sequences of excludable adapters.
+#Find sequences of excludeable adapters.
 #Add column "excludeable" = if diff = 1 and next diff is not 3.
 t$excludable <- (t$diff == 1 & !lead(t$diff,1) == 3)
 
@@ -40,7 +40,6 @@ t$excludable <- (t$diff == 1 & !lead(t$diff,1) == 3)
 acc <-0
 g <- vector()
 for(i in 3:nrow(t)-1){
-  
   if(t$excludable[i]){
     acc <- acc + 1
   } else {
