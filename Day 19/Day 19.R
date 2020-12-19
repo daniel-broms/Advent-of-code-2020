@@ -1,4 +1,5 @@
-#D19 19 : Identify which messages conform to the specified rule 0.
+#Day 19 : Identify which messages conform to the specified rule 0.
+#Parse the rule structure to a single regexp pattern, then apply this pattern to the messages to see which messages match.
 library(stringr)
 library(tidyverse)
 
@@ -21,7 +22,7 @@ t$idx <- strtoi(str_sub(t$idx, 1, str_length(t$idx)-1))
 t <- arrange(t, idx )
 irules <- t$irules
 
-#parse rules ineratively Replace each number with the rule it represents, within parens.
+#parse rules iteratively Replace each number with the rule it represents, within parens.
 parserules <-function(pattern){
   #loop though the string, replace each number with the rule it represents.
   l <- unlist(str_split(pattern, " "))   #split the string to a vector with components. 
@@ -29,14 +30,7 @@ parserules <-function(pattern){
   return(paste(l, sep="", collapse=""))
 }
 
-#return the specified rule
-getrule <- function(x){
-  rule <- irules[x+1]                                   #get rule x (remember R lists are 1-based!)
-  rule <- str_replace(rule, "[:digit:]{1,3}:", "")      #strip the rule number part
-  return(rule)
-}
-
-#if the input is a number : return the rule for that number surrounded by parens if it is another rule or wihtout parens if it is a or b.. Else, return the input.
+#if the input is a number : return the rule for that number surrounded by parens if it is another rule or without parens if it is a or b.. Else, return the input.
 replaceidx <- function(x){
   if(str_detect(x,"^[:digit:]{1,3}$")){
     r <- getrule(strtoi(x))
@@ -52,7 +46,14 @@ replaceidx <- function(x){
   }
 }
 
-#Prime the function with rule 0, iterative expand the pattern until it does not change.
+#return the specified rule
+getrule <- function(x){
+  rule <- irules[x+1]                                   #get rule x (remember R lists are 1-based!)
+  rule <- str_replace(rule, "[:digit:]{1,3}:", "")      #strip the rule number part
+  return(rule)
+}
+
+#Prime the function with rule 0, iteratively expand the pattern until it does not change.
 pattern <- " 0 "
 pp <- ""
 while(!pattern == pp){

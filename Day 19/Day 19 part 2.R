@@ -1,4 +1,5 @@
-#D19 19 : Identify which messages conform to the specified rule 0.
+#Day 19 : Identify which messages conform to the specified rule 0. 
+#Parse the rule structure to a single regexp pattern, then apply this pattern to the messages to see which messages match.
 library(stringr)
 library(tidyverse)
 
