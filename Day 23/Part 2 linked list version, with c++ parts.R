@@ -4,11 +4,15 @@
 nrofcups <- 1000000     #1 million
 iterations <- 10000000  #10 million
 
-wrap<- function(x,nrofcups){
-  if(x>nrofcups){x<- x-nrofcups}
-  if(x<1){x<- x+nrofcups}
-  return(x)
-}
+#Replace this function with wrapC written in c++      RESULT : the function took LONGER time since there are so many calls, and the overhead of a c++ call seems to be higher than an R function call.
+# wrap<- function(x,nrofcups){
+#   if(x>nrofcups){x<- x-nrofcups}
+#   if(x<1){x<- x+nrofcups}
+#   return(x)
+# }
+
+library(Rcpp)
+sourceCpp("Day 23/wrapC.cpp")    #Note that this will also run the R chunks in file wrapC.cpp, producing "9" in this example!
 
 #Initialize the vector and starting cup:
 cups <- c(2,5,8,6,4,7,3,9,1)         #cups vector : The index represents the cup label, and the value is a pointer to the next cup value.
@@ -32,11 +36,11 @@ MakeMoves <- function(iterations){
     n3 <- cups[n2]      #the next cup is the one that n2 points to 
     
     #Find the destination cup as current cup -1.
-    dest_cup <- wrap(ccup - 1, nrofcups)
+    dest_cup <- wrapC(ccup - 1, nrofcups)
     
     #If this is one of the cups to move : subtract 1 until it is not.
     while(dest_cup == n1 | dest_cup == n2 | dest_cup == n3){
-      dest_cup <- wrap(dest_cup - 1, nrofcups)
+      dest_cup <- wrapC(dest_cup - 1, nrofcups)
     }
     
     #"Move" cups n1/n2/n3 by changing the destination cup to point to n1 and n3 to point to the cup after the destination cup.
