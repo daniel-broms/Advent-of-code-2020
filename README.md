@@ -1,5 +1,7 @@
 # Advent-of-code-2020
 
+This project contains my solutions to the Advent of Code 2020 puzzles, all solved in R.
+
 To clone the  GitHub repository to your computer via RStudio
 In RStudio, start a new Project:
 
